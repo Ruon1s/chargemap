@@ -6,6 +6,14 @@ const upload = multer({ dest: './uploads/' });
 const stationController = require('../controllers/stationController');
 const {catSchema, userSchema} = require('../database/models');
 
+
+//route /id for getting single station, delete and modify a station
+
+//route /add for adding a new station
+
+//route / for getting all stations and filtering
+
+
 router.route('/')
     .post(async (req, res) => {
         const post = await catSchema.create({
