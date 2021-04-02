@@ -1,20 +1,33 @@
 'use strict';
-require('dotenv').config();
-const express = require('express');
-const server = express();
-const db = require('./database/db');
-const cors = require('cors');
-const port = 3000;
 
-db.on('connected', () => {
-        server.listen(port, () => console.log(`Example app listening on port ${port}!`));
-        console.log('wee');
+import {ApolloServer} from 'apollo-server-express';
+import schemas from './schemas/index.js';
+import resolvers from './resolvers/index.js';
+import express from 'express';
+import connectDB from './database/db.js'
+import dotenv from 'dotenv';
+
+dotenv.config();
+
+(async () => {
+    try {
+        const con = await connectDB();
+        if(con){
+            console.log('connection to db succesful');
+        }
+        const server = new ApolloServer({
+            typeDefs: schemas,
+            resolvers: resolvers,
+        });
+        const app = express();
+
+        server.applyMiddleware({app});
+
+        app.listen({port: 3000}, () =>
+            console.log(
+                `🚀 Server ready at http://localhost:3000${server.graphqlPath}`),
+        );
+    } catch (e) {
+        console.log('server error: ' + e.message);
     }
-);
-
-const stationRoute = require('./routes/authRoute');
-
-server.use(cors());
-server.use(express.urlencoded({extended: true}));
-server.use(express.json());
-server.use('/station', stationRoute);
+})();
