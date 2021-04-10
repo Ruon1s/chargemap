@@ -4,6 +4,7 @@ import connectionTypesSchema from './connectionTypesSchema.js'
 import currentTypesSchema from './currentTypesSchema.js'
 import levelsSchema from './levelsSchema.js'
 import stationsSchema from './stationsSchema.js'
+import userSchema from "./userSchema.js";
 import {gql} from 'apollo-server-express';
 
 
@@ -23,5 +24,6 @@ export default [
     currentTypesSchema,
     levelsSchema,
     stationsSchema,
+    userSchema
 
 ];

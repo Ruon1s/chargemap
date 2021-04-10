@@ -47,6 +47,7 @@ export default gql`
     }
     
     extend type Mutation {
+    deleteStation(id: ID!): Station
     addStation(
     Connections: [Connections]
     Postcode: String

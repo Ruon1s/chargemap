@@ -2,6 +2,7 @@
 import Stations from "../models/Stations.js";
 import rectangleBounds from '../utils/rectangleBounds.js'
 import Connections from "../models/Connections.js";
+import {AuthenticationError} from "apollo-server-errors";
 
 
 export default {
@@ -34,7 +35,16 @@ export default {
         }
     },
     Mutation: {
-        addStation: async (parent, args) => {
+        deleteStation: (parent, args, {user}) => {
+            if(!user) {
+                throw new AuthenticationError('You have not logged in')
+            }
+          Stations.findByIdAndDelete(args.id);
+        },
+        addStation: async (parent, args, {user}) => {
+            if(!user) {
+                throw new AuthenticationError('You have not logged in')
+            }
             try {
                 console.log(args.Connections);
                 const connections = args.Connections;
