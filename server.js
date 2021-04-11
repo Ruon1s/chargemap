@@ -45,7 +45,7 @@ dotenv.config();
             const { default: localhost } = await import('./host/localhost.js');
             localhost(app, 8000, 3000);
         }
-        server.applyMiddleware({app});
+        server.applyMiddleware({app, path: '/graphql'});
     } catch (e) {
         console.log('server error: ' + e.message);
     }
