@@ -106,5 +106,6 @@ dist
 
 
 # own
-*.pem
-*.csr
+certrequest.csr
+ssl-cert.pem
+ssl-key.pem
