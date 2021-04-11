@@ -10,8 +10,8 @@ import {checkAuth} from "./passport/authenticate.js";
 import helmet from 'helmet';
 import cors from 'cors';
 import https from 'https';
-import localhost from 'host/localhost.js'
-import remote from 'host/remote.js'
+import localhost from './host/localhost.js'
+import remote from './host/remote.js'
 
 dotenv.config();
 
