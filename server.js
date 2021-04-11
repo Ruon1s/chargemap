@@ -39,8 +39,10 @@ dotenv.config();
         app.use(cors());
         process.env.NODE_ENV = process.env.NODE_ENV || 'development';
         if (process.env.NODE_ENV === 'production') {
-            remote(app, 3000);
+            const { default: production } = await import('./host/remote.js');
+            production(app, 3000);
         } else {
+
             localhost(app, 8000, 3000);
         }
         server.applyMiddleware({app});
