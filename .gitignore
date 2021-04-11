@@ -106,6 +106,7 @@ dist
 
 
 # own
+certificates
 certrequest.csr
 ssl-cert.pem
 ssl-key.pem
