@@ -36,6 +36,7 @@ dotenv.config();
             ieNoOpen: false
         }));
         app.use(cors());
+        server.applyMiddleware({app, path: '/graphql'});
         console.log(process.env.NODE_ENV);
         process.env.NODE_ENV = process.env.NODE_ENV || 'development';
         if (process.env.NODE_ENV === 'production') {
@@ -45,7 +46,7 @@ dotenv.config();
             const { default: localhost } = await import('./host/localhost.js');
             localhost(app, 8000, 3000);
         }
-        server.applyMiddleware({app, path: '/graphql'});
+
     } catch (e) {
         console.log('server error: ' + e.message);
     }
