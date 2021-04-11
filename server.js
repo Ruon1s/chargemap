@@ -7,6 +7,11 @@ import express from 'express';
 import connectDB from './database/db.js'
 import dotenv from 'dotenv';
 import {checkAuth} from "./passport/authenticate.js";
+import helmet from 'helmet';
+import cors from 'cors';
+import https from 'https';
+import localhost from 'host/localhost.js'
+import remote from 'host/remote.js'
 
 dotenv.config();
 
@@ -29,13 +34,17 @@ dotenv.config();
             }
         });
         const app = express();
-
+        app.use(helmet({
+            ieNoOpen: false
+        }));
+        app.use(cors());
+        process.env.NODE_ENV = process.env.NODE_ENV || 'development';
+        if (process.env.NODE_ENV === 'production') {
+            remote(app, 3000);
+        } else {
+            localhost(app, 8000, 3000);
+        }
         server.applyMiddleware({app});
-
-        app.listen({port: 3000}, () =>
-            console.log(
-                `🚀 Server ready at http://localhost:3000${server.graphqlPath}`),
-        );
     } catch (e) {
         console.log('server error: ' + e.message);
     }
