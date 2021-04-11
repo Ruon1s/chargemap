@@ -9,7 +9,6 @@ import dotenv from 'dotenv';
 import {checkAuth} from "./passport/authenticate.js";
 import helmet from 'helmet';
 import cors from 'cors';
-import localhost from './host/localhost.js'
 import remote from './host/remote.js'
 
 dotenv.config();
@@ -37,10 +36,13 @@ dotenv.config();
             ieNoOpen: false
         }));
         app.use(cors());
+        console.log(process.env.NODE_ENV);
         process.env.NODE_ENV = process.env.NODE_ENV || 'development';
         if (process.env.NODE_ENV === 'production') {
             remote(app, 3000);
         } else {
+            console.log('localhost');
+            const { default: localhost } = await import('./host/localhost.js');
             localhost(app, 8000, 3000);
         }
         server.applyMiddleware({app});
