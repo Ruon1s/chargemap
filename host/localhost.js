@@ -1,11 +1,11 @@
 import https from 'https';
 import http from 'http';
 import fs from 'fs';
+import path from 'path';
 
+const sslkey = fs.readFileSync(path.resolve('ssl-key.pem'));
+const sslcert = fs.readFileSync(path.resolve('ssl-cert.pem'));
 
-
-const sslkey = fs.readFileSync('ssl-key.pem');
-const sslcert = fs.readFileSync('ssl-cert.pem');
 
 const options = {
     key: sslkey,
